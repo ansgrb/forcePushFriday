@@ -37,14 +37,14 @@ var boxStyles = []struct {
 	horizontal  string
 	vertical    string
 }{
-	{"┌", "┐", "└", "┘", "─", "│"}, // Simple box
-	{"╔", "╗", "╚", "╝", "═", "║"}, // Double line box
+	{"┌", "┐", "└", "┘", "─", "│"},     // Simple box
+	{"╔", "╗", "╚", "╝", "═", "║"},     // Double line box
 	{"+-", "-+", "+-", "-+", "-", "|"}, // ASCII simple
-	{"*", "*", "*", "*", "*", "*"}, // Star box
-	{"▛", "▜", "▙", "▟", "▀", "▌"}, // Block style
+	{"*", "*", "*", "*", "*", "*"},     // Star box
+	{"▛", "▜", "▙", "▟", "▀", "▌"},     // Block style
 }
 
-// Improved ASCII art figures for beneath the box
+// Improved and expanded ASCII art figures for beneath the box
 var figures = [][]string{
 	{
 		"          _\\/_        ",
@@ -91,18 +91,113 @@ var figures = [][]string{
 		"        / | \\         ",
 		"         J L          ",
 	},
+	{
+		"       (╯°□°)╯        ",
+		"       ┻━━┻           ",
+		"        /|\\           ",
+		"       / | \\          ",
+		"        / \\           ",
+		"       /   \\          ",
+	},
+	{
+		"        _ノ乙            ",
+		"       ( ͡° ͜ʖ ͡°)       ",
+		"       /  ⌒\\         ",
+		"      /   |  \\        ",
+		"     /   /|   \\       ",
+		"         / \\          ",
+		"        /   \\         ",
+	},
+	{
+		"        ______        ",
+		"       /      \\       ",
+		"      | ⊙  ⊙  |       ",
+		"      |   ▽    |      ",
+		"       \\______/       ",
+		"         |  |         ",
+		"        ┌|  |┐        ",
+		"        └|  |┘        ",
+		"         |__|         ",
+		"         /  \\         ",
+	},
+	{
+		"        (ง •̀_•́)ง      ",
+		"          |           ",
+		"          |           ",
+		"         /|\\          ",
+	},
+	{
+		"       \\( ⌐■_■)/      ",
+		"         \\| |/        ",
+		"          | |         ",
+		"         /| |\\        ",
+		"        / | | \\       ",
+		"          ⅃ Ⅎ          ",
+	},
+	{
+		"         /|\\          ",
+		"        /*|*\\         ",
+		"       /* | *\\        ",
+		"      /*  |  *\\       ",
+		"     /*   |   *\\      ",
+		"    /*    |    *\\     ",
+		"   /*************\\    ",
+		"          |  |         ",
+		"          |  |         ",
+		"         /|  |\\       ",
+	},
+	{
+		"      ┌─┐             ",
+		"      ┴─┴             ",
+		"   ಠ_ಠ                ",
+		"   <|>                ",
+		"   /ω\\                ",
+	},
+	{
+		"        _______       ",
+		"       /       \\      ",
+		"      | ⇀ ‿ ↼  |      ",
+		"      |  SOON   |     ",
+		"       \\_______/      ",
+		"       W  | |  W      ",
+		"          | |         ",
+		"          | |         ",
+		"         // \\\\        ",
+	},
+	{
+		"       .---------.    ",
+		"      / .-------. \\   ",
+		"     / /         \\ \\  ",
+		"     | |         | |  ",
+		"    _| |_________| |_ ",
+		"  .' |_|         |_| '.",
+		"  '._____ ____ _____.'",
+		"  |     .'____'.     |",
+		"  '.__.'.'    '.'.__.'",
+		"  '.__  |      |  __.'",
+		"  |   '.'.____.'.'   |",
+		"  '.____'.____.'____.'",
+		"  '.________________.'",
+	},
+	{
+		"         🔥  🔥         ",
+		"        🔥    🔥        ",
+		"       🔥 PROD 🔥       ",
+		"        🔥    🔥        ",
+		"         🔥  🔥         ",
+	},
 }
 
 // Different background styles for the meme
 var backgroundPatterns = []string{
-	"",                   // No background
+	"", // No background
 	"░░░░░░░░░░░░░░░░░░", // Light dots
 	"▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒", // Medium dots
 	"▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓", // Heavy dots
-	"················", // Dots
-	"~~~~~~~~~~~~~~~~", // Waves
-	"////////////////", // Slashes
-	"××××××××××××××××", // Crosses
+	"················",   // Dots
+	"~~~~~~~~~~~~~~~~",   // Waves
+	"////////////////",   // Slashes
+	"××××××××××××××××",   // Crosses
 }
 
 // Chaos descriptors for the random failure probabilities
@@ -124,16 +219,22 @@ func main() {
 	customMsg := flag.String("message", "", "Custom message for the meme")
 	colorful := flag.Bool("color", true, "Use colorful output")
 	boxStyle := flag.Int("style", -1, "Box style (0-4, -1 for random)")
-	figureStyle := flag.Int("figure", -1, "Figure style (0-4, -1 for random)")
+	figureStyle := flag.Int("figure", -1, "Figure style (0-14, -1 for random)")
 	bgPattern := flag.Int("bg", -1, "Background pattern (0-7, -1 for random)")
 	chaosLevel := flag.Int("chaos", -1, "Chaos level data (0-5, -1 for random)")
 	width := flag.Int("width", 50, "Width of the meme box")
 	help := flag.Bool("help", false, "Display help information")
+	listFigures := flag.Bool("list-figures", false, "Display all available figures")
 
 	flag.Parse()
 
 	if *help {
 		displayHelp()
+		return
+	}
+
+	if *listFigures {
+		displayAllFigures()
 		return
 	}
 
@@ -166,7 +267,7 @@ func main() {
 	chaosMetrics := generateChaosMetrics(*chaosLevel)
 
 	// Generate and print the meme
-	generateMeme(message, boxStyles[selectedBoxStyle], figures[selectedFigure], 
+	generateMeme(message, boxStyles[selectedBoxStyle], figures[selectedFigure],
 		backgroundPatterns[selectedBg], *width, *colorful, chaosMetrics)
 }
 
@@ -182,10 +283,11 @@ func displayHelp() {
 	fmt.Println("  -message string   Custom message for the meme (default: random from templates)")
 	fmt.Println("  -color            Use colorful output (default: true)")
 	fmt.Println("  -style int        Box style (0-4, -1 for random) (default: -1)")
-	fmt.Println("  -figure int       Figure style (0-4, -1 for random) (default: -1)")
+	fmt.Println("  -figure int       Figure style (0-14, -1 for random) (default: -1)")
 	fmt.Println("  -bg int           Background pattern (0-7, -1 for random) (default: -1)")
 	fmt.Println("  -chaos int        Chaos level data (0-5, -1 for random) (default: -1)")
 	fmt.Println("  -width int        Width of the meme box (default: 50)")
+	fmt.Println("  -list-figures     Display all available figures")
 	fmt.Println("  -help             Display this help information")
 	fmt.Println("")
 	fmt.Println("Examples:")
@@ -196,9 +298,22 @@ func displayHelp() {
 	fmt.Println("Remember: With great power comes great deniability.")
 }
 
+func displayAllFigures() {
+	fmt.Println("Available Figures:")
+	fmt.Println("")
+
+	for i, figure := range figures {
+		fmt.Printf("Figure %d:\n", i)
+		for _, line := range figure {
+			fmt.Println(line)
+		}
+		fmt.Println("")
+	}
+}
+
 func generateChaosMetrics(level int) []string {
 	metrics := make([]string, 0)
-	
+
 	// Choose how many metrics to display (1-4)
 	numMetrics := 1
 	if level < 0 || level > 5 {
@@ -206,16 +321,16 @@ func generateChaosMetrics(level int) []string {
 	} else {
 		numMetrics = level
 	}
-	
+
 	// Create a copy of the descriptors to avoid repeats
 	descriptors := make([]string, len(chaosDescriptors))
 	copy(descriptors, chaosDescriptors)
-	
+
 	// Shuffle the descriptors
 	rand.Shuffle(len(descriptors), func(i, j int) {
 		descriptors[i], descriptors[j] = descriptors[j], descriptors[i]
 	})
-	
+
 	// Select and format the metrics
 	for i := 0; i < numMetrics && i < len(descriptors); i++ {
 		var value int
@@ -228,26 +343,26 @@ func generateChaosMetrics(level int) []string {
 		}
 		metrics = append(metrics, fmt.Sprintf(descriptors[i], value))
 	}
-	
+
 	return metrics
 }
 
 func generateMeme(message string, boxStyle struct {
 	topLeft, topRight, bottomLeft, bottomRight, horizontal, vertical string
 }, figure []string, bgPattern string, width int, colorful bool, chaosMetrics []string) {
-	
+
 	// Adjust width if needed
 	if len(message)+4 > width {
 		width = len(message) + 4
 	}
-	
+
 	// Setup colors if enabled
 	titleColor := color.New(color.FgRed, color.Bold)
 	boxColor := color.New(color.FgCyan)
 	figureColor := color.New(color.FgYellow)
 	bgColor := color.New(color.FgHiBlack)
 	metricColor := color.New(color.FgMagenta, color.Bold)
-	
+
 	if !colorful {
 		titleColor.DisableColor()
 		boxColor.DisableColor()
@@ -255,14 +370,14 @@ func generateMeme(message string, boxStyle struct {
 		bgColor.DisableColor()
 		metricColor.DisableColor()
 	}
-	
+
 	// Create the top border
 	topBorder := boxStyle.topLeft
 	for i := 0; i < width-2; i++ {
 		topBorder += boxStyle.horizontal
 	}
 	topBorder += boxStyle.topRight
-	
+
 	// Create the message line
 	paddingLeft := (width - len(message) - 2) / 2
 	paddingRight := width - len(message) - 2 - paddingLeft
@@ -271,14 +386,14 @@ func generateMeme(message string, boxStyle struct {
 	messageLine += message
 	messageLine += strings.Repeat(" ", paddingRight)
 	messageLine += boxStyle.vertical
-	
+
 	// Create the bottom border
 	bottomBorder := boxStyle.bottomLeft
 	for i := 0; i < width-2; i++ {
 		bottomBorder += boxStyle.horizontal
 	}
 	bottomBorder += boxStyle.bottomRight
-	
+
 	// Print the background if there is one
 	if bgPattern != "" {
 		for i := 0; i < 3; i++ {
@@ -286,12 +401,12 @@ func generateMeme(message string, boxStyle struct {
 			bgColor.Println(padding + bgPattern)
 		}
 	}
-	
+
 	// Print the box with the message
 	boxColor.Println(topBorder)
 	titleColor.Println(messageLine)
 	boxColor.Println(bottomBorder)
-	
+
 	// Print the figure
 	for _, line := range figure {
 		figurePos := (width - len(line)) / 2
@@ -300,13 +415,13 @@ func generateMeme(message string, boxStyle struct {
 		}
 		figureColor.Println(strings.Repeat(" ", figurePos) + line)
 	}
-	
+
 	// Print chaos metrics
 	fmt.Println()
 	for _, metric := range chaosMetrics {
 		metricColor.Printf("  • %s\n", metric)
 	}
-	
+
 	// Add a snarky footer
 	timeNow := time.Now()
 	if timeNow.Weekday() == time.Friday {
