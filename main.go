@@ -395,36 +395,56 @@ func generateMeme(message string, boxStyle struct {
 		if bgPadding >= 0 {
 			padding := strings.Repeat(" ", bgPadding)
 			for i := 0; i < 3; i++ {
-				bgColor.Println(padding + bgPattern)
+				_, err := bgColor.Println(padding + bgPattern)
+				if err != nil {
+					return
+				}
 			}
 		}
 	}
 
 	// Print the box with the message
-	boxColor.Println(topBorder)
-	titleColor.Println(messageLine)
-	boxColor.Println(bottomBorder)
+	_, err := boxColor.Println(topBorder)
+	if err != nil {
+		return
+	}
+
+	_, _ = titleColor.Println(messageLine)
+
+	_, _ = boxColor.Println(bottomBorder)
 
 	// Print the figure with safe position calculation
 	for _, line := range figure {
 		figurePos := (width - len(line)) / 2
 		if figurePos >= 0 {
-			figureColor.Println(strings.Repeat(" ", figurePos) + line)
+			_, err := figureColor.Println(strings.Repeat(" ", figurePos) + line)
+			if err != nil {
+				return
+			}
 		} else {
-			figureColor.Println(line) // print without padding if width is too small
+			_, err := figureColor.Println(line)
+			if err != nil {
+				return
+			} // print without padding if the width is too small
 		}
 	}
 
 	// Print chaos metrics
 	fmt.Println()
 	for _, metric := range chaosMetrics {
-		metricColor.Printf("  • %s\n", metric)
+		_, err := metricColor.Printf("  • %s\n", metric)
+		if err != nil {
+			return
+		}
 	}
 
 	// Add a snarky footer
 	timeNow := time.Now()
 	if timeNow.Weekday() == time.Friday && timeNow.Hour() >= 16 {
 		fmt.Println()
-		color.New(color.FgHiRed, color.Bold).Println("  ⚠️  IT'S ACTUALLY FRIDAY AFTERNOON RIGHT NOW. DO IT. DO IT.")
+		_, err := color.New(color.FgHiRed, color.Bold).Println("  ⚠️  IT'S ACTUALLY FRIDAY AFTERNOON RIGHT NOW. DO IT. DO IT.")
+		if err != nil {
+			return
+		}
 	}
 }
