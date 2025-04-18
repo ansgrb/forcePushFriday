@@ -9,7 +9,7 @@ this go program generates dark humor ascii art memes that encourage the chaos of
 ### 🎲 basic random generation
 
 ```bash
-$ ./friday-deploy
+$ ./forcePushFriday
 ╔════════════════════════════════════════════════╗
 ║     deploy on friday, debug on monday          ║
 ╚════════════════════════════════════════════════╝
@@ -28,7 +28,7 @@ $ ./friday-deploy
 ### 💬 custom message with specific style
 
 ```bash
-$ ./friday-deploy -message "yolo deploy friday" -style 0 -figure 3
+$ ./forcePushFriday -message "yolo deploy friday" -style 0 -figure 3
 ┌──────────────────────────────────────────────┐
 │              yolo deploy friday              │
 └──────────────────────────────────────────────┘
@@ -49,7 +49,7 @@ $ ./friday-deploy -message "yolo deploy friday" -style 0 -figure 3
 ### ⏰ friday afternoon detection
 
 ```bash
-$ ./friday-deploy -width 60
+$ ./forcePushFriday -width 60
 *************************************************************
 *     friday deployments: the russian roulette of software   *
 *************************************************************
