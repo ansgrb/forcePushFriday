@@ -10,6 +10,12 @@ import (
 	"github.com/fatih/color"
 )
 
+// Add these constants at the top of your file
+const (
+	// Ensure consistent character width
+	figureWidth = 20 // Maximum width of figures
+)
+
 // Message templates with dark humor for encouraging Friday deployments
 var messageTemplates = []string{
 	"Push To Production On Friday, What Could Go Wrong?",
@@ -85,7 +91,7 @@ var figures = [][]string{
 	},
 	{
 		"        (҂◡_◡)        ",
-		"       ᕦ(╭ರ ⊙ ͜ʖ⊙ರ)ᕥ    ",
+		"       ᕦ(╭ರ ⊙ ͜ʖ⊙ര)ᕥ    ",
 		"          |           ",
 		"         /|\\          ",
 		"        / | \\         ",
@@ -347,9 +353,32 @@ func generateChaosMetrics(level int) []string {
 	return metrics
 }
 
+func normalizeFigure(figure []string) []string {
+	normalized := make([]string, len(figure))
+	for i, line := range figure {
+		// Ensure each line is exactly figureWidth characters
+		if len(line) > figureWidth {
+			normalized[i] = line[:figureWidth]
+		} else {
+			// Pad with spaces if shorter
+			padding := strings.Repeat(" ", (figureWidth-len(line))/2)
+			normalized[i] = padding + line + padding
+			// If odd length, add one more space at the end
+			if len(normalized[i]) < figureWidth {
+				normalized[i] += " "
+			}
+		}
+	}
+	return normalized
+}
+
+// Update the generateMeme function to use normalized figures
 func generateMeme(message string, boxStyle struct {
 	topLeft, topRight, bottomLeft, bottomRight, horizontal, vertical string
 }, figure []string, bgPattern string, width int, colorful bool, chaosMetrics []string) {
+	// Normalize the figure first
+	normalizedFigure := normalizeFigure(figure)
+
 	// Validate and adjust width
 	messageLen := len(message)
 	minWidth := messageLen + 4 // minimum width needed for message + padding
@@ -414,7 +443,7 @@ func generateMeme(message string, boxStyle struct {
 	_, _ = boxColor.Println(bottomBorder)
 
 	// Print the figure with safe position calculation
-	for _, line := range figure {
+	for _, line := range normalizedFigure {
 		figurePos := (width - len(line)) / 2
 		if figurePos >= 0 {
 			_, err := figureColor.Println(strings.Repeat(" ", figurePos) + line)
