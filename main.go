@@ -239,7 +239,7 @@ func main() {
 	}
 
 	// Seed the random number generator
-	rand.Seed(time.Now().UnixNano())
+	rand.New(rand.NewSource(time.Now().UnixNano()))
 
 	// Choose the message (either custom or random template)
 	message := *customMsg
@@ -350,10 +350,11 @@ func generateChaosMetrics(level int) []string {
 func generateMeme(message string, boxStyle struct {
 	topLeft, topRight, bottomLeft, bottomRight, horizontal, vertical string
 }, figure []string, bgPattern string, width int, colorful bool, chaosMetrics []string) {
-
-	// Adjust width if needed
-	if len(message)+4 > width {
-		width = len(message) + 4
+	// Validate and adjust width
+	messageLen := len(message)
+	minWidth := messageLen + 4 // minimum width needed for message + padding
+	if width < minWidth {
+		width = minWidth
 	}
 
 	// Setup colors if enabled
@@ -371,34 +372,31 @@ func generateMeme(message string, boxStyle struct {
 		metricColor.DisableColor()
 	}
 
-	// Create the top border
-	topBorder := boxStyle.topLeft
-	for i := 0; i < width-2; i++ {
-		topBorder += boxStyle.horizontal
-	}
-	topBorder += boxStyle.topRight
+	// Create the top border with validation
+	topBorder := boxStyle.topLeft + strings.Repeat(boxStyle.horizontal, width-2) + boxStyle.topRight
 
-	// Create the message line
-	paddingLeft := (width - len(message) - 2) / 2
-	paddingRight := width - len(message) - 2 - paddingLeft
-	messageLine := boxStyle.vertical
-	messageLine += strings.Repeat(" ", paddingLeft)
-	messageLine += message
-	messageLine += strings.Repeat(" ", paddingRight)
-	messageLine += boxStyle.vertical
+	// Create the message line with safe padding calculation
+	totalPadding := width - 2 - messageLen     // total available padding
+	paddingLeft := totalPadding / 2            // half for left side
+	paddingRight := totalPadding - paddingLeft // remainder for right side
+
+	messageLine := boxStyle.vertical +
+		strings.Repeat(" ", paddingLeft) +
+		message +
+		strings.Repeat(" ", paddingRight) +
+		boxStyle.vertical
 
 	// Create the bottom border
-	bottomBorder := boxStyle.bottomLeft
-	for i := 0; i < width-2; i++ {
-		bottomBorder += boxStyle.horizontal
-	}
-	bottomBorder += boxStyle.bottomRight
+	bottomBorder := boxStyle.bottomLeft + strings.Repeat(boxStyle.horizontal, width-2) + boxStyle.bottomRight
 
 	// Print the background if there is one
 	if bgPattern != "" {
-		for i := 0; i < 3; i++ {
-			padding := strings.Repeat(" ", (width-len(bgPattern))/2)
-			bgColor.Println(padding + bgPattern)
+		bgPadding := (width - len(bgPattern)) / 2
+		if bgPadding >= 0 {
+			padding := strings.Repeat(" ", bgPadding)
+			for i := 0; i < 3; i++ {
+				bgColor.Println(padding + bgPattern)
+			}
 		}
 	}
 
@@ -407,13 +405,14 @@ func generateMeme(message string, boxStyle struct {
 	titleColor.Println(messageLine)
 	boxColor.Println(bottomBorder)
 
-	// Print the figure
+	// Print the figure with safe position calculation
 	for _, line := range figure {
 		figurePos := (width - len(line)) / 2
-		if figurePos < 0 {
-			figurePos = 0
+		if figurePos >= 0 {
+			figureColor.Println(strings.Repeat(" ", figurePos) + line)
+		} else {
+			figureColor.Println(line) // print without padding if width is too small
 		}
-		figureColor.Println(strings.Repeat(" ", figurePos) + line)
 	}
 
 	// Print chaos metrics
@@ -424,11 +423,8 @@ func generateMeme(message string, boxStyle struct {
 
 	// Add a snarky footer
 	timeNow := time.Now()
-	if timeNow.Weekday() == time.Friday {
-		hour := timeNow.Hour()
-		if hour >= 16 {
-			fmt.Println()
-			color.New(color.FgHiRed, color.Bold).Println("  ⚠️  IT'S ACTUALLY FRIDAY AFTERNOON RIGHT NOW. DO IT. DO IT.")
-		}
+	if timeNow.Weekday() == time.Friday && timeNow.Hour() >= 16 {
+		fmt.Println()
+		color.New(color.FgHiRed, color.Bold).Println("  ⚠️  IT'S ACTUALLY FRIDAY AFTERNOON RIGHT NOW. DO IT. DO IT.")
 	}
 }
