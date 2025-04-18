@@ -319,6 +319,11 @@ func displayHelp() {
 	fmt.Println("  friday-deploy -color=false -width 60")
 	fmt.Println("")
 	fmt.Println("Remember: With great power comes great deniability.")
+	fmt.Println("")
+	fmt.Println("License: GNU GPL v3")
+	fmt.Println("This is free software, and you are welcome to redistribute it")
+	fmt.Println("under certain conditions. See the LICENSE file for details.")
+
 }
 
 func displayAllFigures() {
