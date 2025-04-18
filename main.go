@@ -471,7 +471,7 @@ func generateMeme(message string, boxStyle struct {
 	timeNow := time.Now()
 	if timeNow.Weekday() == time.Friday && timeNow.Hour() >= 16 {
 		fmt.Println()
-		_, err := color.New(color.FgHiRed, color.Bold).Println("  ⚠️  IT'S ACTUALLY FRIDAY AFTERNOON RIGHT NOW. DO IT. DO IT.")
+		_, err := color.New(color.FgHiRed, color.Bold).Println("  ⚠️  IT'S PROBABLY FRIDAY AFTERNOON RIGHT NOW. DO IT. DO IT.")
 		if err != nil {
 			return
 		}
