@@ -108,17 +108,17 @@ mv forcePushFriday /usr/local/bin/
 
 ### 🎛️ command line options
 
-| flag | description | default |
-|------|-------------|---------|
-| `-message` | custom message for the meme | random from templates |
-| `-color` | use colorful output | `true` |
-| `-style` | box style (0-4, -1 for random) | `-1` (random) |
-| `-figure` | figure style (0-4, -1 for random) | `-1` (random) |
-| `-bg` | background pattern (0-7, -1 for random) | `-1` (random) |
-| `-chaos` | chaos level data (0-5, -1 for random) | `-1` (random) |
-| `-width` | width of the meme box | `50` |
-| `-help` | display help information | `false` |
-
+| flag            | description                             | default               |
+|-----------------|-----------------------------------------|-----------------------|
+| `-message`      | custom message for the meme             | random from templates |
+| `-color`        | use colorful output                     | `true`                |
+| `-style`        | box style (0-4, -1 for random)          | `-1` (random)         |
+| `-figure`       | figure style (0-4, -1 for random)       | `-1` (random)         |
+| `-bg`           | background pattern (0-7, -1 for random) | `-1` (random)         |
+| `-chaos`        | chaos level data (0-5, -1 for random)   | `-1` (random)         |
+| `-width`        | width of the meme box                   | `50`                  |
+| `-list-figures` | display all available figures           | `false`               |
+| `-help`         | display help information                | `false`               |
 ### 🧙‍♂️ advanced examples
 
 ```bash
