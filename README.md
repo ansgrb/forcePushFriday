@@ -179,10 +179,156 @@ contributions are welcome! please feel free to submit a pull request.
 4. push to the branch (`git push origin feature/amazing-feature`)
 5. open a pull request
 
+## ☃️ available figures (add yours)
+```bash
+
+Figure 0:
+          _\/_        
+           /\         
+           /\         
+          /  \        
+         |    |       
+         |    |       
+       __|    |__     
+      /__|    |__\    
+
+Figure 1:
+        (•̀ᴗ•́)و       
+         /|\         
+        / | \        
+         / \         
+        /   \        
+       👟    👟       
+
+Figure 2:
+       \(^o^)/       
+         |__|         
+          ||          
+          ||          
+         /  \         
+        /    \        
+
+Figure 3:
+      _____           
+     /     \          
+    | ^   ^ |         
+    |   ω   |         
+     \_____/          
+        ||            
+       /||\           
+      / || \          
+        ⅃⅃            
+
+Figure 4:
+        (҂◡_◡)        
+       ᕦ(╭ರ ⊙ ͜ʖ⊙ര)ᕥ    
+          |           
+         /|\          
+        / | \         
+         J L          
+
+Figure 5:
+       (╯°□°)╯        
+       ┻━━┻           
+        /|\           
+       / | \          
+        / \           
+       /   \          
+
+Figure 6:
+        _ノ乙            
+       ( ͡° ͜ʖ ͡°)       
+       /  ⌒\         
+      /   |  \        
+     /   /|   \       
+         / \          
+        /   \         
+
+Figure 7:
+        ______        
+       /      \       
+      | ⊙  ⊙  |       
+      |   ▽    |      
+       \______/       
+         |  |         
+        ┌|  |┐        
+        └|  |┘        
+         |__|         
+         /  \         
+
+Figure 8:
+        (ง •̀_•́)ง      
+          |           
+          |           
+         /|\          
+
+Figure 9:
+       \( ⌐■_■)/      
+         \| |/        
+          | |         
+         /| |\        
+        / | | \       
+          ⅃ Ⅎ          
+
+Figure 10:
+         /|\          
+        /*|*\         
+       /* | *\        
+      /*  |  *\       
+     /*   |   *\      
+    /*    |    *\     
+   /*************\    
+          |  |         
+          |  |         
+         /|  |\       
+
+Figure 11:
+      ┌─┐             
+      ┴─┴             
+   ಠ_ಠ                
+   <|>                
+   /ω\                
+
+Figure 12:
+        _______       
+       /       \      
+      | ⇀ ‿ ↼  |      
+      |  SOON   |     
+       \_______/      
+       W  | |  W      
+          | |         
+          | |         
+         // \\        
+
+Figure 13:
+       .---------.    
+      / .-------. \   
+     / /         \ \  
+     | |         | |  
+    _| |_________| |_ 
+  .' |_|         |_| '.
+  '._____ ____ _____.'
+  |     .'____'.     |
+  '.__.'.'    '.'.__.'
+  '.__  |      |  __.'
+  |   '.'.____.'.'   |
+  '.____'.____.'____.'
+  '.________________.'
+
+Figure 14:
+         🔥  🔥         
+        🔥    🔥        
+       🔥 PROD 🔥       
+        🔥    🔥        
+         🔥  🔥         
+
+
+```
+
 ## ⚠️ disclaimer
 
 this tool is for humor purposes only. the author takes no responsibility for any actual friday deployments made under its influence. remember: with great power comes great deniability.
 
 ---
 
-*"deploy on friday, debug on monday. this is the way."* 🧙‍♂️
+### *"friday deploys are a sacrifice. monday is when the gods collect."*  🧙‍♂️
